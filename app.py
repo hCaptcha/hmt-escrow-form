@@ -8,10 +8,17 @@ import json
 import basemodels
 import requests
 from hmt_escrow.job import Job
+import os
+import sys
 
 app = Flask(__name__)
 
-HMT_API = 'http://127.0.0.1:8000/labeling-requests'
+try:
+  HMT_API = os.environ['HMT_API']
+except KeyError:
+  print("Please setup Environment Variable HMT_API")
+  sys.exit(1)
+
 
 class ManifestUploaderForm(FlaskForm):
   """Manifest uploading form"""

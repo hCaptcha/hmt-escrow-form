@@ -5,6 +5,7 @@ Also install packages as highlighted in the hmt-escrow repository.
 ```bash
 export FLASK_ENV=development
 export FLASK_APP=app.py
+export HMT_API=http://127.0.0.1:8000/labeling-requests | <WHATEVER YOUR URL IS>
 
 flask run
 ```
