@@ -25,17 +25,3 @@ h3 {
   margin-block-start: 0em;
   margin-block-end: 0.5em;
 }
-
-pre {
-  outline: 1px solid #ccc; 
-  padding: 5px; 
-  margin: 5px; 
-  overflow-x: scroll;
-  background: #09182b;
-  color: white;
-}
-.string { color: green; }
-.number { color: darkorange; }
-.boolean { color: blue; }
-.null { color: magenta; }
-.key { color: red; }

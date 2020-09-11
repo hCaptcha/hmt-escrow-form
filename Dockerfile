@@ -7,11 +7,6 @@ WORKDIR /usr/src/app
 # Copy Shit over
 COPY . /usr/src/app
 RUN cd /usr/src/app
-
-# Install HMT-ESCROW DEPENDENCIES
-RUN pip install git+https://github.com/iamdefinitelyahuman/py-solc-x@master#egg=py-solc-x \
-            git+https://github.com/ethereum/trinity@master#egg=trinity \
-            git+https://github.com/sphinx-doc/sphinx@master#egg=sphinx
           
 # Install Requirements
 RUN pip install -r requirements.txt
