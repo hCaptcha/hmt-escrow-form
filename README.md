@@ -15,3 +15,14 @@ go to localhost:5000
 ```bash
 uvicorn mock-api:app
 ```
+
+
+
+# To run on docker
+```
+docker build -f ./Dockerfile --tag hmt-escrow-form .
+docker run -p 5000:5000 --name hmtescform hmt-escrow-form
+```
+
+go to localhost:5000
+ 
