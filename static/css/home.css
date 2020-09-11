@@ -1,0 +1,56 @@
+.home-template .container {
+  padding: 40px;
+}
+
+.home-template a {
+  text-decoration: none;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: block;
+  color: #3979a4;
+}
+
+.home-template h1 {
+  margin-bottom: 30px;
+}
+
+.home-template i {
+  font-size: .9em;
+}
+
+.nav-active {
+  color: #5eb9d7;
+}
+
+.nav:hover {
+  text-decoration: underline;
+}
+
+.view-error {
+  margin: 10px 0;
+  z-index: 10;
+  background: #fae7ea;
+  border-radius: 3px;
+  border: 1px solid #e1c5c5;
+  color: #8d7575;
+  width: 182px;
+  text-align: center;
+  height: fit-content;
+  margin: auto;
+}
+
+.view-request {
+  width: 100%;
+  margin: 1em 0;
+}
+
+.view-request__header {
+  background: #09182b;
+  color: white;
+  text-align: center;
+}
+
+tr {
+  text-align: center;
+}
