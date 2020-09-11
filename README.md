@@ -5,6 +5,7 @@ Also install packages as highlighted in the hmt-escrow repository.
 ```bash
 export FLASK_ENV=development
 export FLASK_APP=app.py
+export HMT_API=http://127.0.0.1:8000/labeling-requests | <WHATEVER YOUR URL IS>
 
 flask run
 ```
@@ -14,3 +15,14 @@ go to localhost:5000
 ```bash
 uvicorn mock-api:app
 ```
+
+
+
+# To run on docker
+```
+docker build -f ./Dockerfile --tag hmt-escrow-form .
+docker run -p 5000:5000 --name hmtescform hmt-escrow-form
+```
+
+go to localhost:5000
+ 

@@ -1,11 +1,14 @@
 <!doctype html>
 <title>HMT Escrow</title>
-<meta id="json-data" data-json="{{data}}">
 {% block styles %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/monokai-sublime.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
+
 {% endblock %}
 <nav>
   <h1>HMT Manifest Uploader</h1>
@@ -24,35 +27,18 @@
   {% endif %}
   {% if data %}
   <div class="request-container">
-    <pre id="js">  
+    <pre>
+      <code class="json">{{data}}</code> 
     </pre>
   </div>
   {% endif %}
 </div>
 {% endblock %}
 <script>
-  function syntaxHighlight(json) {
-        json = json.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-        return json.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, function (match) {
-            var cls = 'number';
-            if (/^"/.test(match)) {
-                if (/:$/.test(match)) {
-                    cls = 'key';
-                } else {
-                    cls = 'string';
-                }
-            } else if (/true|false/.test(match)) {
-                cls = 'boolean';
-            } else if (/null/.test(match)) {
-                cls = 'null';
-            }
-            return '<span class="' + cls + '">' + match + '</span>';
-        });
-    }
-  document.addEventListener('DOMContentLoaded', (event) => {
-    var code = document.getElementById('json-data').getAttribute('data-json')
-    var code_holder = document.getElementById('js')
-    code_holder.innerHTML = syntaxHighlight(code)
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
 });
 </script>
 </section>
