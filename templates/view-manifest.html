@@ -1,0 +1,44 @@
+<!doctype html>
+<title>HMT Escrow</title>
+{% block styles %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+      href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/styles/monokai-sublime.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.1.2/build/highlight.min.js"></script>
+
+{% endblock %}
+<nav>
+  <h1>HMT Manifest Uploader</h1>
+  <ul>
+    <li><a href="{{ url_for('upload') }}" class="nav">Upload Manifest</a></li>
+    <li><a href="{{ url_for('view_labeling_requests') }}" class="nav">View Labeling Requests</a></li>
+  </ul>
+</nav>
+<section class="container">
+{% block content %}
+<div class="formwrapper">
+  {% if error %}
+  <div class="view-error">
+    {{ error }}
+  </div>
+  {% endif %}
+  {% if data %}
+  <div class="request-container">
+    <pre>
+      <code class="json">{{data}}</code> 
+    </pre>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}
+<script>
+document.addEventListener('DOMContentLoaded', (event) => {
+  document.querySelectorAll('pre code').forEach((block) => {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+</section>
