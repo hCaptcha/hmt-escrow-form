@@ -4,7 +4,7 @@ FROM python:3.7-buster
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
-# Copy Shit over
+# Copy code over
 COPY . /usr/src/app
 RUN cd /usr/src/app
           
