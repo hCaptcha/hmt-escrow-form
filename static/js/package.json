@@ -1,0 +1,11 @@
+{
+  "name": "hmt-escrow-form-js",
+  "version": "1.0.0",
+  "description": "JS File for HMT-ESCROW-FORM",
+  "main": "index.js",
+  "author": "Harjyot Singh",
+  "license": "MIT",
+  "dependencies": {
+    "web3": "^1.3.0"
+  }
+}
