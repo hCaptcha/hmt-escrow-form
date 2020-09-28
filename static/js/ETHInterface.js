@@ -16,8 +16,30 @@ class ETHInterface {
     const web3Instance = new web3(provider)
 
     // Internals
-    this._contract = new web3Instance.eth.Contract(NFT_ABI, NFT_CONTRACT_ADDRESS)
     this._owner = OWNER_ADDRESS
+  }
+
+  get_factory(factory_addr) {
+    return new this.web3Instance.eth.Contract(EscrowFactoryABI, factory_addr)
+  }
+
+  get_escrow(escrow_addr) {
+    return new this.web3Instance.eth.Contract(EscrowFactory, escrow_addr)
+  }
+
+  async list_transactions(factory_addr) {
+    try {
+      const factory_contract = this.get_factory(factory_addr)
+      let transactions = []
+
+      factory_contract.escrowCounters.call(address,function(err, escrow_addr) {
+        const escrow_manifest_url = await this.get_escrow(escrow_addr).methods.manifestUrl().call()
+        transactions.push({escrow_addr: escrow_addr, manifest_url: escrow_manifest_url})
+      });
+    }
+    catch(e) {
+      console.log(e)
+    }
   }
 }
 
