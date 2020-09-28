@@ -1,4 +1,4 @@
-const EscrowFactory = require('./ABIs/Escrow')
+const EscrowABI= require('./ABIs/Escrow')
 const EscrowFactoryABI = require('./ABIs/EscrowFactory')
 const HDWalletProvider = require("truffle-hdwallet-provider")
 const web3 = require('web3')
@@ -24,7 +24,7 @@ class ETHInterface {
   }
 
   get_escrow(escrow_addr) {
-    return new this.web3Instance.eth.Contract(EscrowFactory, escrow_addr)
+    return new this.web3Instance.eth.Contract(EscrowABI, escrow_addr)
   }
 
   async list_transactions(factory_addr) {
