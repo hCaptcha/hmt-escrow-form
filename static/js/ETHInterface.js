@@ -13,8 +13,7 @@ class ETHInterface {
     }
     const provider = new HDWalletProvider(MNEMONIC, `https://${NETWORK}.infura.io/v3/${INFURA_KEY}`)
     
-    const web3Instance = new web3(provider)
-
+    this.web3Instance = new web3(provider)
     // Internals
     this._owner = OWNER_ADDRESS
   }
@@ -28,19 +27,32 @@ class ETHInterface {
   }
 
   async list_transactions(factory_addr) {
-    try {
       const factory_contract = this.get_factory(factory_addr)
       let transactions = []
-
-      factory_contract.escrowCounters.call(address,function(err, escrow_addr) {
-        const escrow_manifest_url = await this.get_escrow(escrow_addr).methods.manifestUrl().call()
-        transactions.push({escrow_addr: escrow_addr, manifest_url: escrow_manifest_url})
-      });
-    }
-    catch(e) {
-      console.log(e)
-    }
+      factory_contract.getPastEvents('Launched',{                               
+        fromBlock: 0,     
+        toBlock: 'latest'        
+      }).then(async events => {
+        events.forEach(event => {
+          const escrow_addr = event.returnValues.escrow
+            // const escrow_manifest_url = await this.get_escrow(escrow_addr).methods.manifestUrl().call({from: this._owner})
+            this.get_escrow(escrow_addr).methods.manifestUrl().call({from: this._owner})
+            .then(escrow_manifest_url => {
+              if(escrow_manifest_url !== null) {                                            
+                console.log(escrow_manifest_url)
+              }
+              else {
+                console.log("err")
+              }
+            }).catch(err => console.log(err))
+        })
+      })
   }
 }
 
-module.exports = ETHInterface
+module.exports = new ETHInterface(
+  process.env.MNEMONIC,
+  process.env.INFURA_KEY,
+  process.env.OWNER_ADDRESS,
+  process.env.NETWORK
+)
