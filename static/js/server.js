@@ -42,14 +42,12 @@ app.post('/job', (req, res) => {
   const gas_payer_priv = req.body.gas_payer_priv
   const rep_oracle_pub_key = req.body.rep_oracle_pub_key
   const manifest_url = req.body.manifest_url
-  const manifest_json = req.body.manifest_json
 
   try {
     const job = new Job(gas_payer, 
                         gas_payer_priv, 
                         rep_oracle_pub_key, 
-                        manifest_url, 
-                        manifest_json)
+                        manifest_url)
     job.launch()
     res.send({message: "Pending Verification & Upload"})
   }

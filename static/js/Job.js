@@ -1,15 +1,21 @@
-const keythereum = require("keythereum");
+const keythereum = require("keythereum")
 const ETHInterface = require('./ETHInterface')
+const Ajv = require('ajv')
+const manifestSchema = require('./manifest-schema-pydantic')
+const request = require('request');
 
 class Job {
-  constructor(gas_payer, gas_payer_priv, rep_oracle_pub_key, manifest_url, manifest_json) {
-    this._gas_payer = gas_payer;
-    this._gas_payer_priv = gas_payer_priv;
-    this._rep_oracle_pub_key = rep_oracle_pub_key;
-    this._manifest_url = manifest_url;
+  constructor(gas_payer, gas_payer_priv, rep_oracle_pub_key, manifest_url) {
+    this._gas_payer = gas_payer
+    this._gas_payer_priv = gas_payer_priv
+    this._rep_oracle_pub_key = rep_oracle_pub_key
+    this._manifest_url = manifest_url
 
-    this.serialized_manifest = manifest_json;
-    this.amount = null;
+    this.serialized_manifest = this._download_manifest(manifest_json)
+    this.amount = null
+
+    // Validate manifest
+    this._validate_manifest()
 
     if(!this._validate_credentials()) {
       throw Error('Invalid Combination of Public & Private key')
@@ -19,9 +25,29 @@ class Job {
     this._process_manifest()
   }
 
+  _download_manifest(link) {
+    request(this._manifest_url, function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        return JSON.parse(body);
+      }
+      else {
+        throw new Error("Couldn't download manifest file, please try again.")
+      }
+    })
+  }
+
+
   _validate_credentials() {
     const calculated_pub_key = ETHInterface.web3Instance.utils.toChecksumAddress(keythereum.privateKeyToAddress(this._gas_payer_priv))
     return ETHInterface.web3Instance.utils.toChecksumAddress(this._gas_payer) === calculated_pub_key
+  }
+
+  _validate_manifest() {
+    const ajv = new Ajv()
+    const validate = ajv.compile(manifestSchema)
+    if(!validate(this.serialized_manifest)) {
+      throw new Error("Manifest invalid")
+    }
   }
 
   async launch() {
