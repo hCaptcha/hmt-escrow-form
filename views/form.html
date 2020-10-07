@@ -44,6 +44,8 @@
 </div>
 {% endblock %}
 <script>
+  const { Job } = require('hmt-escrow-js')
+  
   const submit_btn = document.getElementById('submit-btn')
   submit_btn.onclick = function(){
     const gas_payer = document.getElementById('gas_payer').value
