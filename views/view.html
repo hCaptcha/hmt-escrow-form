@@ -1,16 +1,16 @@
 <!doctype html>
 <title>HMT Escrow</title>
 {% block styles %}
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/forms.css') }}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/home.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/forms.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
   {% endblock %}
 <nav>
   <h1>HMT Manifest Uploader</h1>
   <ul>
-    <li><a href="{{ url_for('upload') }}" class="nav">Upload Manifest</a></li>
-    <li><a href="{{ url_for('view_labeling_requests') }}" class="nav nav-active">View Labeling Requests</a></li>
+    <li><a href="/" class="nav">Upload Manifest</a></li>
+    <li><a href="/view-requests" class="nav nav-active">View Labeling Requests</a></li>
   </ul>
 </nav>
 <section class="container">
@@ -34,7 +34,7 @@
       </tr>
     {% for job in data %}
       <tr class="view-request__data">
-        <td><a href={{url_for('view_labeling_requests', id=job.job_id)}}>{{job.job_id}}</a></td>
+        <td><a href={{'/view-manifest/' + {{job.job_id}}}>{{job.job_id}}</a></td>
         <td>${{ job.task_bid_price }}</td>
         <td>{{ job.job_total_tasks }}</td>
       </tr>

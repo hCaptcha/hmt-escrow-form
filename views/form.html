@@ -1,0 +1,36 @@
+<!doctype html>
+<title>HMT Escrow</title>
+{% block styles %}
+    <link rel="stylesheet" href="/css/home.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/forms.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  {% endblock %}
+<nav>
+  <h1>HMT Manifest Uploader</h1>
+  <ul>
+    <li><a href="/" class="nav nav-active">Upload Manifest</a></li>
+    <li><a href="/view-requests" class="nav">View Labeling Requests</a></li>
+  </ul>
+</nav>
+<section class="container">
+{% block content %}
+<div class="formwrapper">
+  <form method="POST" action="/" enctype="multipart/form-data">
+    <div class="form-field">{{ form.gas_payer.label }} {{ form.gas_payer }}
+      
+    </div>
+    <div class="form-field">{{ form.gas_payer_priv.label }} {{ form.gas_payer_priv }}
+      
+    </div>
+    <div class="form-field">{{ form.rep_oracle_pub_key.label }} {{ form.rep_oracle_pub_key }}
+      
+    </div>
+    <div class="form-field">{{ form.manifest.label }} {{ form.manifest }}
+      
+    </div>
+    {{ form.submit }}
+  </form>
+</div>
+{% endblock %}
+</section>

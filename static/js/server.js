@@ -4,8 +4,8 @@ const express = require('express');
 
 const app = express();
 
-const ETHInterface = require('./ETHInterface')
-const Job = require('./Job')
+const ETHInterface = require('./static/js/ETHInterface')
+const Job = require('./static/js/Job')
 
 const port = process.env.PORT || 8080;
 
