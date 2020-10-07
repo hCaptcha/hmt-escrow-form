@@ -22,6 +22,7 @@ npm run start
 or use the module directly (launch new job):
 
 ```js
+  const Job = require('./Job')
   try {
     const job = new Job(gas_payer, 
                         gas_payer_priv, 
