@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const express = require('express')
 const nunjucks = require('nunjucks')
 const path = require('path')
+const request = require('request');
 
 const app = express()
 
@@ -22,8 +23,21 @@ app.get('/', function(req, res) {
   res.render('form.html')
 })
 
-app.get('/view-manifest/:manifestUrl', function(req, res) {
-  res.render('view-manifest.html', {url: req.params.manifestUrl})
+app.get('/view-manifest', function(req, res) {
+  let json =  null
+  let error = null
+  const url = req.query.url
+
+  request(url, function (error, response, body) {
+    if (!error && response.statusCode == 200) {
+      json = JSON.parse(body);
+      return res.render('view-manifest.html', {data: JSON.stringify(json, null, 4)})
+    }
+    else {
+      error = "Couldn't download manifest file, please try again."
+      return res.render('view-manifest.html', {error: error})
+    }
+  })
 })
 
 app.get('/view-requests', function(req, res) {

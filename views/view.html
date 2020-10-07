@@ -16,33 +16,81 @@
 <section class="container">
 {% block content %}
 <div class="formwrapper">
-  {% if error %}
-  <div class="view-error">
-    {{ error }}
-  </div>
-  {% endif %}
-  {% if data %}
-  <div class="request-container">
-    <h2>Loaded Requests</h2>
-    <h3>Highest Bid Price: ${{ highest_bid_meta.highest_bid }}</h3>
-    <h3>Tasks at Bid Price: {{ highest_bid_meta.tasks_at_bid }}</h3>
-    <table class='view-request'>
+    <div class="form-field">
+      <div class="errors-none" id="errors">
+      </div>
+    </div>
+    <div class="form-field">
+      <label for="factory_addr">Factory Address</label> 
+      <input id="factory_addr" name="factory_addr" required="true" type="text" value="">
+    </div>
+    <div class="form-field">
+      <div class="submit-btn" id="submit-btn">Submit</div>
+    </div>
+    <table class='view-request' id="table_results">
       <tr class="view-request__header">
-        <td>ID</td>
-        <td>Bid Price</td>
-        <td>Tasks</td>
+        <td>Manifest Url / Hash</td>
+        <td>Escrow address</td>
       </tr>
-    {% for job in data %}
-      <tr class="view-request__data">
-        <td><a href={{'/view-manifest/' + {{job.job_id}}}>{{job.job_id}}</a></td>
-        <td>${{ job.task_bid_price }}</td>
-        <td>{{ job.job_total_tasks }}</td>
-      </tr>
-    {% endfor %}
     </table>
-  </div>
-  {% endif %}
-
 </div>
 {% endblock %}
+<script>
+  const submit_btn = document.getElementById('submit-btn')
+  submit_btn.onclick = function(){
+    const factory_addr = document.getElementById('factory_addr').value
+    const table = document.getElementById('table_results')
+
+    const errors = document.getElementById('errors')
+    if(factory_addr === "") {
+      errors.innerHTML="Factory address required"
+      errors.classList.add('errors')
+    }
+    else {
+      errors.innerHTML = ""
+      errors.classList.remove('errors')
+      
+      try {
+        alert("Wait, loading transactions..")
+        const res = await await ETHInterface.list_transactions(factory_addr)
+
+        for(let ctr=0; ctr<res.length; ctr++) {
+          const elem = res[ctr]
+          const tbl_row = document.createElement('tr')
+          // Add class
+          tbl_row.classList.add('view-request__data')
+
+          // create td children
+          const hash_elem = document.createElement('td')
+          const escrow_elem = document.createElement('td')
+
+          hash_elem.innerText = elem.url
+          escrow_elem.innerText = elem.escrow
+          
+          // Add URL if it is
+          if(elem.is_url) {
+            const link_elem = document.createElement('a')
+            link_elem.href = "/view-manifest?url=" + elem.url
+            link_elem.innerHTML = elem.url
+            hash_elem.innerHTML = null
+
+            // Append
+            hash_elem.appendChild(link_elem)
+          }
+
+          // Add to row element
+          tbl_row.appendChild(hash_elem)
+          tbl_row.appendChild(escrow_elem)
+
+          // Add to main table
+          table.appendChild(tbl_row)
+        }
+      }
+      catch(e) { 
+        console.log(e)
+        alert("Something went wrong")
+      }
+    }
+  }
+</script>
 </section>

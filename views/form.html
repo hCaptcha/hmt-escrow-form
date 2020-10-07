@@ -16,21 +16,63 @@
 <section class="container">
 {% block content %}
 <div class="formwrapper">
-  <form method="POST" action="/" enctype="multipart/form-data">
-    <div class="form-field">{{ form.gas_payer.label }} {{ form.gas_payer }}
-      
+  <div class="form">
+    <div class="form-field">
+      <div class="errors-none" id="errors">
+      </div>
     </div>
-    <div class="form-field">{{ form.gas_payer_priv.label }} {{ form.gas_payer_priv }}
-      
+    <div class="form-field">
+      <label for="gas_payer">Gas Payer</label> 
+      <input id="gas_payer" name="gas_payer" required="true" type="text" value="">
     </div>
-    <div class="form-field">{{ form.rep_oracle_pub_key.label }} {{ form.rep_oracle_pub_key }}
-      
+    <div class="form-field">
+      <label for="gas_payer_priv">Gas Payer Private</label> 
+      <input id="gas_payer_priv" name="gas_payer_priv" required="true" type="text" value="">
     </div>
-    <div class="form-field">{{ form.manifest.label }} {{ form.manifest }}
-      
+    <div class="form-field">
+      <label for="rep_oracle_pub_key">Reputation Oracle Public Key</label> 
+      <input id="rep_oracle_pub_key" name="rep_oracle_pub_key" required="true" type="text" value="">
     </div>
-    {{ form.submit }}
-  </form>
+    <div class="form-field">
+      <label for="manifest_url">Manifest Url</label> 
+      <input id="manifest_url" name="manifest_url" required="true" type="text" value="">
+    </div>
+    <div class="form-field">
+      <div class="submit-btn" id="submit-btn">Submit</div>
+    </div>
+  </div>
 </div>
 {% endblock %}
+<script>
+  const submit_btn = document.getElementById('submit-btn')
+  submit_btn.onclick = function(){
+    const gas_payer = document.getElementById('gas_payer').value
+    const gas_payer_priv = document.getElementById('gas_payer_priv').value
+    const rep_oracle_pub_key = document.getElementById('rep_oracle_pub_key').value
+    const manifest_url = document.getElementById('manifest_url').value
+
+    const errors = document.getElementById('errors')
+    if(gas_payer === "" || gas_payer_priv === "" || rep_oracle_pub_key === "" || manifest_url === "") {
+      errors.innerHTML="Field values missing"
+      errors.classList.add('errors')
+    }
+    else {
+      errors.innerHTML = ""
+      errors.classList.remove('errors')
+      try {
+        const job = new Job(gas_payer, 
+                            gas_payer_priv, 
+                            rep_oracle_pub_key, 
+                            manifest_url)
+        job.launch()
+        alert("Pending Verification & Upload")
+        window.location.href = '/success'
+      }
+      catch(e) { 
+        console.log(e)
+        alert("Something went wrong")
+      }
+    }
+  }
+</script>
 </section>

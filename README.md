@@ -1,21 +1,19 @@
-Install virtualenv python3 and use requirements.txt to install dependencies.
-Also install packages as highlighted in the hmt-escrow repository.
+# HMT Escrow Form
+Purely based in javascript now, interacts, validates automatically from the blockchain.
 
-# Usage of Flask Server
+Install Dependencies:
+
 ```bash
-export FLASK_ENV=development
-export FLASK_APP=app.py
-export HMT_API=http://127.0.0.1:8000/labeling-requests | <WHATEVER YOUR URL IS>
-
-flask run
+yarn install
 ```
+
+Run this as a http-server:
+```
+yarn run start
+```
+
+
 go to localhost:5000
-
-# Run mock server for label requests
-```bash
-uvicorn mock-api:app
-```
-
 
 
 # To run on docker
