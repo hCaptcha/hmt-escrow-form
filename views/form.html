@@ -38,6 +38,10 @@
       <input id="manifest_url" name="manifest_url" required="true" type="text" value="">
     </div>
     <div class="form-field">
+      <label for="factory_addr">Factory Address</label> 
+      <input id="factory_addr" name="factory_addr" required="true" type="text" value="">
+    </div>
+    <div class="form-field">
       <div class="submit-btn" id="submit-btn">Submit</div>
     </div>
   </div>
@@ -52,6 +56,7 @@
     const gas_payer_priv = document.getElementById('gas_payer_priv').value
     const rep_oracle_pub_key = document.getElementById('rep_oracle_pub_key').value
     const manifest_url = document.getElementById('manifest_url').value
+    const factory_addr = document.getElementById('factory_addr').value
 
     const errors = document.getElementById('errors')
     if(gas_payer === "" || gas_payer_priv === "" || rep_oracle_pub_key === "" || manifest_url === "") {
@@ -65,7 +70,9 @@
         const job = new Job(gas_payer, 
                             gas_payer_priv, 
                             rep_oracle_pub_key, 
-                            manifest_url)
+                            manifest_url,
+                            factory_addr === ""? factory_addr : null
+                            )
         job.launch()
         alert("Pending Verification & Upload")
         window.location.href = '/success'
