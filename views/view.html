@@ -54,7 +54,7 @@
       
       try {
         alert("Wait, loading transactions..")
-        const res = await await ETHInterface.list_transactions(factory_addr)
+        const res = await ETHInterface.list_transactions(factory_addr)
 
         for(let ctr=0; ctr<res.length; ctr++) {
           const elem = res[ctr]
