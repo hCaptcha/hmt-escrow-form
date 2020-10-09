@@ -7,12 +7,6 @@ Install Dependencies:
 yarn install
 ```
 
-# TO DO
-```
-Get package JS from hmt-escrow library installed here, to be used by the frontend.
-```
-
-
 Run this as a http-server:
 ```
 yarn run start
