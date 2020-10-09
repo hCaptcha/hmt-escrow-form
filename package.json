@@ -25,7 +25,7 @@
     "@babel/polyfill": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
     "@babel/register": "^7.11.5",
-    "@hcaptcha/hmt-escrow-js": "^1.0.0-alpha.3",
+    "@hcaptcha/hmt-escrow-js": "^1.0.0-alpha.4",
     "body-parser": "^1.19.0",
     "express": "^4.17.1",
     "nunjucks": "^3.2.2",
