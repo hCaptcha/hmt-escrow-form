@@ -1,15 +1,18 @@
-import React, { Component } from 'react'
 import '../styles/components/RawJobForm.css'
+
+import React, { Component } from 'react'
+const { Job } = require('hmt-escrow-js')
+const CONFIG = require('../config')
 
 class RawJobForm extends Component {
   constructor() {
     super()
     this.state = {
-      gas_payer: '',
-      gas_payer_priv: '',
-      rep_oracle_pub_key: '',
-      manifest_url: '',
-      factory_addr: '',
+      gasPayer: '',
+      gasPayerPriv: '',
+      repOraclePubKey: '',
+      manifestUrl: '',
+      factoryAddr: '',
       errors: []
     }
 
@@ -25,23 +28,23 @@ class RawJobForm extends Component {
   }
 
   validateForm() {
-    const { gas_payer, gas_payer_priv, rep_oracle_pub_key, manifest_url} = this.state
+    const { gasPayer, gasPayerPriv, repOraclePubKey, manifestUrl} = this.state
     let formValid = true
     let updatedErrors = []
 
-    if(gas_payer === "") {
+    if(gasPayer === "") {
       updatedErrors.push("Missing value: Gas Payer")
       formValid = false
     }
-    if(gas_payer_priv === "") {
+    if(gasPayerPriv === "") {
       updatedErrors.push("Missing value: Gas Payer Private")
       formValid = false
     }
-    if(rep_oracle_pub_key === "") {
+    if(repOraclePubKey === "") {
       updatedErrors.push("Missing value: Reputation Oracle")
       formValid = false
     }
-    if(manifest_url === "") {
+    if(manifestUrl === "") {
       updatedErrors.push("Missing value: Manifest URL")
       formValid = false
     }
@@ -56,9 +59,25 @@ class RawJobForm extends Component {
       this.setState({
         errors: []
       })
-      console.log(this.state)
-    }
-    
+      const { gasPayer, gasPayerPriv, repOraclePubKey, manifestUrl, factoryAddr} = this.state
+      try {
+        const job = new Job(CONFIG.ethProviderUrl)
+        job.initialize(
+          gasPayer, 
+          gasPayerPriv, 
+          repOraclePubKey, 
+          manifestUrl, 
+          CONFIG.hmtokenAddr, 
+          factoryAddr)
+        job.launch()
+        alert("Manifest processing")
+      }
+      catch(e) {
+        this.setState({
+          errors: e
+        })
+      }
+    }   
   }
 
   render() {
@@ -77,53 +96,53 @@ class RawJobForm extends Component {
             }
           </div>
           <div className="form-field">
-            <label for="gas_payer">Gas Payer</label> 
+            <label for="gasPayer">Gas Payer</label> 
             <input 
-              id="gas_payer" 
-              name="gas_payer"  
+              id="gasPayer" 
+              name="gasPayer"  
               type="text" 
-              value={this.state.gas_payer} 
-              onChange={e => this.onChange('gas_payer', e.target.value)}
+              value={this.state.gasPayer} 
+              onChange={e => this.onChange('gasPayer', e.target.value)}
             />
           </div>
           <div className="form-field">
-            <label for="gas_payer_priv">Gas Payer Private</label> 
+            <label for="gasPayerPriv">Gas Payer Private</label> 
             <input 
-              id="gas_payer_priv" 
-              name="gas_payer_priv"  
+              id="gasPayerPriv" 
+              name="gasPayerPriv"  
               type="text" 
-              value={this.state.gas_payer_priv}
-              onChange={e => this.onChange('gas_payer_priv', e.target.value)}
+              value={this.state.gasPayerPriv}
+              onChange={e => this.onChange('gasPayerPriv', e.target.value)}
             />
           </div>
           <div className="form-field">
-            <label for="rep_oracle_pub_key">Reputation Oracle Public Key</label> 
+            <label for="repOraclePubKey">Reputation Oracle Public Key</label> 
             <input
-              id="rep_oracle_pub_key" 
-              name="rep_oracle_pub_key"  
+              id="repOraclePubKey" 
+              name="repOraclePubKey"  
               type="text" 
-              value={this.state.rep_oracle_pub_key}
-              onChange={e => this.onChange('rep_oracle_pub_key', e.target.value)}
+              value={this.state.repOraclePubKey}
+              onChange={e => this.onChange('repOraclePubKey', e.target.value)}
             />
           </div>
           <div className="form-field">
-            <label for="manifest_url">Manifest Url</label> 
+            <label for="manifestUrl">Manifest Url</label> 
             <input
-              id="manifest_url" 
-              name="manifest_url"  
+              id="manifestUrl" 
+              name="manifestUrl"  
               type="text" 
-              value={this.state.manifest_url} 
-              onChange={e => this.onChange('manifest_url', e.target.value)}
+              value={this.state.manifestUrl} 
+              onChange={e => this.onChange('manifestUrl', e.target.value)}
             />
           </div>
           <div className="form-field">
-            <label for="factory_addr">Factory Address</label> 
+            <label for="factoryAddr">Factory Address</label> 
             <input
-              id="factory_addr" 
-              name="factory_addr"  
+              id="factoryAddr" 
+              name="factoryAddr"  
               type="text" 
-              value={this.state.factory_addr}
-              onChange={e => this.onChange('factory_addr', e.target.value)}
+              value={this.state.factoryAddr}
+              onChange={e => this.onChange('factoryAddr', e.target.value)}
             />
           </div>
           <div className="form-field">
