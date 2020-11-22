@@ -1,26 +1,27 @@
 # HMT Escrow Form
 Purely based in javascript now, interacts, validates automatically from the blockchain.
 
-Install Dependencies:
+Modify [config file](client/src/config.js) and set the following variables:
+```
+ethProviderUrl: '',
+hmtokenAddr: ''
+```
 
+Install Dependencies:
 ```bash
+cd ./client
 yarn install
 ```
 
-Run this as a http-server:
+
+Run the react app:
 ```
 yarn run start
 ```
 
+go to localhost:3000
 
-go to localhost:5000
-
-
-# To run on docker
+Production build:
 ```
-docker build -f ./Dockerfile --tag hmt-escrow-form .
-docker run -p 5000:5000 --name hmtescform hmt-escrow-form
+yarn run build
 ```
-
-go to localhost:5000
- 
