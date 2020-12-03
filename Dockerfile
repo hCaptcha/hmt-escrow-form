@@ -13,10 +13,8 @@ RUN pip install -r requirements.txt
 
 # Export Environment Variables
 ENV FLASK_APP=app.py
-ENV HMT_API=http://127.0.0.1:8000/labeling-requests
 
 
 # Run the flask Server & Mock API
-# CMD ["flask", "run"] 
+CMD ["flask", "run"] 
 
-CMD ./run-server-and-api.sh

@@ -10,12 +10,11 @@
   <h1>HMT Manifest Uploader</h1>
   <ul>
     <li><a href="{{ url_for('upload') }}" class="nav">Upload Manifest</a></li>
-    <li><a href="{{ url_for('view_labeling_requests') }}" class="nav">View Labeling Requests</a></li>
   </ul>
 </nav>
 <section class="container">
 {% block content %}
-  <h1 class="string">Success Manifest Submitted!</h1>
+  <h1 class="string">Success Manifest Submitted! Contract address is: {{ addr }}</h1>
 </div>
 {% endblock %}
 </section>
